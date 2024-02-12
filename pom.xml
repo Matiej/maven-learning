@@ -71,7 +71,7 @@
                 <version>3.2.0</version>
                 <executions>
                     <execution>
-                        <id>auot-clean</id>
+                        <id>auto-clean</id>
                         <phase>initialize</phase>
                         <goals>
                             <goal>clean</goal>
