@@ -1,3 +1,5 @@
+package com.ematiej.maven_course;
+
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;

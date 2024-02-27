@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +19,7 @@ class DeveloperReputationCalculatorTest {
 
     private DeveloperReputationCalculator calculator;
     private Developer developerMock;
+
 
     @BeforeEach
     void setUp() {
@@ -40,7 +45,21 @@ class DeveloperReputationCalculatorTest {
 
         int score = calculator.calculate(developerMock);
 
-        assertEquals(followers.size() * 2, score,
+        assertEquals(followers.size() * DeveloperReputationCalculator.getFollowersMultiplier(), score,
                 "Reputation score should be double the number of followers");
+    }
+
+    @Test
+    @DisplayName("Calculate reputation score with Hacktober bonus during October")
+    void calculateReputationScore_DuringHacktober_ShouldIncludeBonus() {
+        List<Developer> followers = List.of(new Developer("follower1", null));
+        when(developerMock.getFollowers()).thenReturn(followers);
+
+        calculator.setClock(Clock.fixed(Instant.parse("2024-10-15T00:00:00Z"), ZoneOffset.UTC));
+
+        int score = calculator.calculate(developerMock);
+
+        assertEquals((followers.size() * DeveloperReputationCalculator.getFollowersMultiplier()) + DeveloperReputationCalculator.getHacktoberBonus(),
+                score, "Reputation score should include Hacktober bonus during October");
     }
 }
