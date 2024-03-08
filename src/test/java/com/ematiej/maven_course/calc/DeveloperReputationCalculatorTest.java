@@ -62,4 +62,14 @@ class DeveloperReputationCalculatorTest {
         assertEquals((followers.size() * DeveloperReputationCalculator.getFollowersMultiplier()) + DeveloperReputationCalculator.getHacktoberBonus(),
                 score, "Reputation score should include Hacktober bonus during October");
     }
+
+    @Test
+    @DisplayName("Calculate reputation score handles null followers list without exception")
+    void calculateReputationScore_NullFollowersList_ShouldReturnZero() {
+        when(developerMock.getFollowers()).thenReturn(null);
+
+        int score = calculator.calculate(developerMock);
+
+        assertEquals(0, score, "Reputation score should be 0 when followers list is null");
+    }
 }
