@@ -1,6 +1,4 @@
-package com.ematiej.maven_course;
-
-import org.springframework.cglib.core.Local;
+package com.ematiej.maven_course.review;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
