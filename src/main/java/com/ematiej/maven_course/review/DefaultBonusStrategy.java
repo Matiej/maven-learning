@@ -12,15 +12,15 @@ public class DefaultBonusStrategy implements BonusStrategy {
     private static final int MIN_AGE_FOR_BONUS = BonusParameters.BASE.getMinAgeForBonus();
 
     @Override
-    public double calculateBonusPoints(User user, int userAge, double purchaseCostInPln) throws UserNotPremiumException {
-        int membershipStatus = MembershipService.getInstance().getStatus(user.getId());
+    public double calculateBonusPoints(UserReviewed userReviewed, int userAge, double purchaseCostInPln) throws UserNotPremiumException {
+        int membershipStatus = MembershipService.getInstance().getStatus(userReviewed.getId());
         if (membershipStatus != 1) {
-            throw new UserNotPremiumException(user.getId());
+            throw new UserNotPremiumException(userReviewed.getId());
         }
 
         double points = purchaseCostInPln * BASE_BONUS_MULTIPLIER + BASE_BONUS_POINTS;
         if (isEligibleForBonus(points, userAge)) {
-            user.setPoints(user.getPoints() + points);
+            userReviewed.setPoints(userReviewed.getPoints() + points);
             return points;
         }
 

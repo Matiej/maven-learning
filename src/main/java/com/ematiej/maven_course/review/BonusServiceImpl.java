@@ -11,9 +11,9 @@ public class BonusServiceImpl implements IBonusService {
 
     @Override
     public Double grantPoints(String userId, int userAge, double purchaseCostPln) {
-        User user;
+        UserReviewed userReviewed;
         try {
-            user = mySqlRepository.findByIdOld(userId);
+            userReviewed = mySqlRepository.findByIdOld(userId);
             //Exception Handling: Specific exceptions are caught, and a custom exception (UserNotFoundException) is thrown if the user is not found.
         } catch (Throwable t) {
             //rror Logging: SLF4J logging framework is used instead of System.err.println()
@@ -23,7 +23,7 @@ public class BonusServiceImpl implements IBonusService {
             return null;
         }
 
-        if (user == null) {
+        if (userReviewed == null) {
             return 0.0;
         }
 
@@ -34,8 +34,8 @@ public class BonusServiceImpl implements IBonusService {
             double p = purchaseCostPln * 0.8 + 120;
             //The business rule for calculating bonus points has been extracted into a separate method to make it clearer and easier to change.
             if (p > 1000 && p <= 2000 && userAge > 18) {
-                user.setPoints(user.getPoints() + p);
-                mySqlRepository.save(user);
+                userReviewed.setPoints(userReviewed.getPoints() + p);
+                mySqlRepository.save(userReviewed);
 
                 return p;
             } else {
