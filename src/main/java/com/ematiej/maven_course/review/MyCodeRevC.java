@@ -1,4 +1,4 @@
-package com.ematiej.maven_course;
+package com.ematiej.maven_course.review;
 
 import java.util.*;
 

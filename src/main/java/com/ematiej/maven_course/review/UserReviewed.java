@@ -1,6 +1,6 @@
 package com.ematiej.maven_course.review;
 
-public class User {
+public class UserReviewed {
 
     public void setPoints(double points) {
 

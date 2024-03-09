@@ -19,6 +19,11 @@
         <jaxb.version>2.3.0</jaxb.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <javax-xml-bind.version>2.3.1</javax-xml-bind.version>
+        <apache-commons.version>3.8.1</apache-commons.version>
+        <jackson-databind.version>2.15.3</jackson-databind.version>
+        <lombok.version>1.18.24</lombok.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
 
     <dependencies>
@@ -51,8 +56,33 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
+            <version>${javax-xml-bind.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache-commons.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
 
     </dependencies>
@@ -81,6 +111,20 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
@@ -98,6 +142,25 @@
                 <groupId>org.jvnet.jaxb</groupId>
                 <artifactId>jaxb-maven-plugin</artifactId>
                 <version>2.0.9</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--            creates in target address pojo object-->
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>0.5.1</version>
+                <configuration>
+                    <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
+                    <targetPackage>com.ematiej.maven_course.model</targetPackage>
+                    <useCommonsLang3>true</useCommonsLang3>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
