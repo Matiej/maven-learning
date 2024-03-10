@@ -1,8 +1,8 @@
-package com.ematiej.maven_course.mavenfortesting
+package com.ematiej.maven_course
 
 import spock.lang.Specification
 
-class SpockHelloTestSpec extends Specification {
+class SpockHelloSpec extends Specification {
     def "GetSpockHello"() {
         when:
         def foo = "123"
